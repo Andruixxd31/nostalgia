@@ -1,19 +1,13 @@
-const { MongoClient } = require('mongodb');
-const uri = 'mongodb://localhost:27017/nostalgia';
+const mongoose = require('mongoose');
 
-let dbConnection;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-module.exports = {
-  connectToDb: (cb) => {
-    MongoClient.connect(uri)
-      .then((client) => {
-        dbConnection = client.db();
-        return cb();
-      })
-      .catch(err => {
-        console.log(err);
-        return cb(err);
-      })
-  },
-  getDb: () => { return dbConnection; }
-}
+mongoose.connect(MONGODB_URI)
+  .then(dbConnection => {
+    console.log("database is connected")
+    return dbConnection;
+  })
+  .catch(err => {
+    console.log(err);
+    return cb(err);
+  });
