@@ -1,7 +1,5 @@
-require('dotenv').config();
-const app = require('./server');
-require('./db')
-
+import app from "./server.js";
+import "./db.js";
 
 app.listen(app.get('port'), () => {
   console.log("listening on port ", app.get('port'));

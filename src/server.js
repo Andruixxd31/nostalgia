@@ -1,25 +1,24 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
+import { config } from 'dotenv';
+import express from 'express';
+import userRoutes from './routes/auth.routes.js';
+config();
 
 // Initializations
 const app = express();
 
 // Settings
 app.set('port', process.env.PORT || 4000)
-app.set('views', path.join(__dirname, "views"))
 
 // Middlewares
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Global Variables
 
 // Routes
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.send("hello world");
 });
+app.use(userRoutes);
 
-// Static Files
-app.use(express.static(path.join(__dirname, 'public')));
-
-module.exports = app
+export default app;
