@@ -2,12 +2,12 @@ import User from "../models/users.js"
 
 export const signup = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
-  console.log(req.body);
   if (password !== confirmPassword) {
     res.status(400).json({
       status: "unsuccesful",
       message: "passwords don't match"
     });
+    return;
   }
 
   if (password.length < 8) {
@@ -15,15 +15,17 @@ export const signup = async (req, res) => {
       status: "unsuccesful",
       message: "password must be at least 8 characters long"
     });
+    return;
   }
 
-
   const userFound = await User.findOne({ email: email })
+  console.log("found: ", userFound);
   if (userFound) {
     res.status(400).json({
       status: "unsuccesful",
-      message: "Email already registered"
+      message: "email already registered"
     });
+    return;
   }
 
   const user = new User({
@@ -34,10 +36,10 @@ export const signup = async (req, res) => {
 
   user.password = await user.encryptPassword(password);
 
-  console.log(user);
+  user.save();
   res.status(200).json({
     status: "success",
     message: "user signed up"
   })
-
+  return;
 }
