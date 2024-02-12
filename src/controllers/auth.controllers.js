@@ -17,6 +17,7 @@ export const signup = async (req, res) => {
     });
   }
 
+
   const userFound = await User.findOne({ email: email })
   if (userFound) {
     res.status(400).json({
@@ -25,11 +26,14 @@ export const signup = async (req, res) => {
     });
   }
 
-  const user = await User.create({
+  const user = new User({
     name: name,
     email: email,
     password: password,
   });
+
+  user.password = await user.encryptPassword(password);
+
   console.log(user);
   res.status(200).json({
     status: "success",
