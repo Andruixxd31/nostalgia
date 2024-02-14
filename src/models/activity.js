@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const ActivitySchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   timesDone: {
     type: Number,
