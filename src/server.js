@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import express from 'express';
 import userRoutes from './routes/auth.routes.js';
+import noteRoutes from './routes/activities.routes.js';
 config();
 
 // Initializations
@@ -20,5 +21,6 @@ app.get('/', (_, res) => {
   res.send("hello world");
 });
 app.use(userRoutes);
+app.use(noteRoutes);
 
 export default app;
