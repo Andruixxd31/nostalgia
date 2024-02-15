@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import cors from 'cors';
 import express from 'express';
 import userRoutes from './routes/auth.routes.js';
 import noteRoutes from './routes/activities.routes.js';
@@ -11,6 +12,7 @@ const app = express();
 app.set('port', process.env.PORT || 4000)
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
